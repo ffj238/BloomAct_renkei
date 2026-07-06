@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SurveyCake × SPOKES 連携提案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;600;700&display=swap');
+
+  :root {
+    --green: #3DBA90;
+    --green-dark: #2a9a74;
+    --green-light: #EAF7F1;
+    --yellow: #F5B849;
+    --red: #F26659;
+    --dark: #1a1a2e;
+    --mid: #4a4a6a;
+    --light: #f8f9fc;
+    --white: #ffffff;
+    --border: #e4e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f1635 0%, #1a2a4a 50%, #0d2d2a 100%);
+    padding: 72px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,186,144,0.15) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 10%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,184,73,0.08) 0%, transparent 70%);
+  }
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(61,186,144,0.15);
+    border: 1px solid rgba(61,186,144,0.3);
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--green); }
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+  }
+  .hero-meta-item .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+
+  /* LAYOUT */
+  .page { max-width: 860px; margin: 0 auto; padding: 0 40px 80px; }
+
+  /* SECTION */
+  .section { padding: 56px 0 0; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .section-label .bar {
+    width: 3px; height: 20px;
+    background: var(--green);
+    border-radius: 2px;
+  }
+  .section-label span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 24px;
+  }
+
+  /* FLOW DIAGRAM — USER JOURNEY */
+  .flow-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 16px;
+  }
+  .flow-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .flow-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px;
+    flex: 1;
+  }
+  .flow-node {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .flow-node.spokes { background: linear-gradient(135deg, #e8f4ff, #cce3ff); }
+  .flow-node.survey { background: linear-gradient(135deg, var(--green-light), #c8f0e2); }
+  .flow-node.data   { background: linear-gradient(135deg, #fff8e8, #ffe8b0); }
+  .flow-node.action { background: linear-gradient(135deg, #fff0f0, #ffd4d0); }
+  .flow-step-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .flow-step-sub {
+    font-size: 11px;
+    color: var(--mid);
+    text-align: center;
+    line-height: 1.5;
+  }
+  .flow-arrow {
+    flex-shrink: 0;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    color: var(--green);
+    font-size: 20px;
+  }
+  .flow-badge {
+    position: absolute;
+    top: -4px; right: -4px;
+    background: var(--green);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* FLOW DIAGRAM — PARTNERSHIP */
+  .partner-flow {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin-top: 16px;
+  }
+  .partner-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+  }
+  .partner-row:last-child { margin-bottom: 0; }
+  .partner-box {
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .partner-box.spokes-box {
+    background: linear-gradient(135deg, #e8f4ff, #daeeff);
+    border: 1px solid #b8d8ff;
+  }
+  .partner-box.survey-box {
+    background: linear-gradient(135deg, var(--green-light), #d4f0e6);
+    border: 1px solid #a8e0c8;
+  }
+  .partner-box-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .partner-box.spokes-box .partner-box-label { color: #3a7fcf; }
+  .partner-box.survey-box .partner-box-label { color: var(--green-dark); }
+  .partner-box strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .partner-box p { font-size: 12px; color: var(--mid); }
+  .partner-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--green);
+    font-size: 18px;
+  }
+  .partner-arrow span {
+    font-size: 9px;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .partner-result {
+    margin-top: 24px;
+    background: linear-gradient(135deg, #f0fdf7, #e6faf2);
+    border: 1px solid var(--green);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .partner-result-icon { font-size: 28px; }
+  .partner-result-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 4px;
+  }
+  .partner-result-text p { font-size: 12px; color: var(--mid); }
+
+  /* USE CASES */
+  .usecase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .usecase-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .usecase-card:hover { box-shadow: 0 4px 20px rgba(61,186,144,0.12); }
+  .usecase-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .usecase-card.type-a::before { background: var(--green); }
+  .usecase-card.type-b::before { background: var(--yellow); }
+  .usecase-card.type-c::before { background: #3a7fcf; }
+  .usecase-emoji { font-size: 28px; margin-bottom: 14px; }
+  .usecase-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .type-a .usecase-tag { background: var(--green-light); color: var(--green-dark); }
+  .type-b .usecase-tag { background: #fff8e8; color: #c8860a; }
+  .type-c .usecase-tag { background: #e8f4ff; color: #3a7fcf; }
+  .usecase-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .usecase-card p { font-size: 13px; color: var(--mid); line-height: 1.6; }
+  .usecase-feature {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .feature-pill {
+    font-size: 11px;
+    background: var(--light);
+    border: 1px solid var(--border);
+    color: var(--mid);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  /* FEATURES HIGHLIGHT */
+  .features-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .feature-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .feature-card .icon { font-size: 24px; margin-bottom: 10px; }
+  .feature-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .feature-card p { font-size: 12px; color: var(--mid); line-height: 1.5; }
+
+  /* SECURITY */
+  .security-bar {
+    background: linear-gradient(135deg, #0f1635, #1a2a4a);
+    border-radius: 14px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .security-icon { font-size: 36px; flex-shrink: 0; }
+  .security-text h3 { color: var(--white); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .security-text p { color: rgba(255,255,255,0.55); font-size: 13px; }
+  .security-badges {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .security-badge {
+    background: rgba(61,186,144,0.15);
+    border: 1px solid rgba(61,186,144,0.35);
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+  }
+
+  /* POC */
+  .poc-box {
+    border: 2px dashed var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    background: var(--white);
+  }
+  .poc-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff8e8;
+    border: 1px solid #f5b849;
+    color: #c8860a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .poc-box h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+  .poc-box p { font-size: 13px; color: var(--mid); line-height: 1.7; }
+  .poc-steps {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .poc-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .poc-step-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .poc-step p { font-size: 13px; color: var(--mid); }
+
+  /* NEXT STEPS */
+  .nextsteps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .nextstep-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .nextstep-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--green-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .nextstep-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .nextstep-content p { font-size: 13px; color: var(--mid); }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 64px;
+    padding: 32px 40px;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-brand { font-size: 15px; font-weight: 700; color: var(--green); }
+  .footer-note { font-size: 12px; color: #aaa; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0 0;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 48px 20px 56px; }
+    .page { padding: 0 20px 60px; }
+    .partner-row { grid-template-columns: 1fr; }
+    .partner-arrow { transform: rotate(90deg); margin: 8px auto; }
+    .flow-steps { gap: 4px; }
+    .security-badges { margin-left: 0; }
+    .footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span>●</span>
+      Partnership Proposal
+    </div>
+    <h1>SPOKES × <span>SurveyCake</span><br>連携提案</h1>
+    <p class="hero-sub">動画視聴の「その先」を、データで繋ぐ</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="dot"></span>2026年7月1日 会議後 初稿</div>
+      <div class="hero-meta-item"><span class="dot"></span>Bloom Act × SurveyCake</div>
+      <div class="hero-meta-item"><span class="dot"></span>Confidential</div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- SECTION 1: USER JOURNEY FLOW -->
+  <div class="section">
+    <div class="section-label"><div class="bar"></div><span>Flow 01</span></div>
+    <h2>エンドユーザーの体験フロー</h2>
+
+    <div class="flow-wrap">
+      <div class="flow-title">SPOKES 動画視聴 → SurveyCake フォーム → データ活用</div>
+      <div class="flow-steps">
+
+        <div class="flow-step">
+          <div class="flow-node spokes">
+            🎬
+          </div>
+          <div class="flow-step-label">SPOKES 動画</div>
+          <div class="flow-step-sub">サービス説明・<br>研修・商談準備</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-step">
+          <div class="flow-node survey" style="position:relative">
+            📋
+            <div class="flow-badge">NEW</div>
+          </div>
+          <div class="flow-step-label">SurveyCake<br>フォーム表示</div>
+          <div class="flow-step-sub">動画末尾に<br>埋め込み</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-step">
+          <div class="flow-node data">
+            💡
+          </div>
+          <div class="flow-step-label">回答 ＋<br>視聴ログ</div>
+          <div class="flow-step-sub">定量データ<br>を収集</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-step">
+          <div class="flow-node action">
+            🔔
+          </div>
+          <div class="flow-step-label">自動アクション</div>
+          <div class="flow-step-sub">アラート・<br>タグ付与・通知</div>
+        </div>
+
+      </div>
+    </div>
+    <p style="font-size:12px; color:#999; text-align:right;">※ 視聴ログとアンケートデータの統合は POC フェーズで検証予定</p>
+  </div>
+
+  <!-- SECTION 2: PARTNERSHIP FLOW -->
+  <div class="section">
+    <div class="section-label"><div class="bar"></div><span>Flow 02</span></div>
+    <h2>パートナーシップ連携構造</h2>
+
+    <div class="partner-flow">
+      <div class="partner-row">
+        <div class="partner-box spokes-box">
+          <div class="partner-box-label">SPOKES が提供</div>
+          <strong>インタラクティブ動画</strong>
+          <p>資料・説明・研修コンテンツを対話型動画に変換。視聴ログ（視聴時間・離脱点）を蓄積。</p>
+        </div>
+        <div class="partner-arrow">
+          <span>↔</span>
+          <span>URL<br>埋め込み</span>
+        </div>
+        <div class="partner-box survey-box">
+          <div class="partner-box-label">SurveyCake が提供</div>
+          <strong>フォーム・フィードバック収集</strong>
+          <p>動画末尾にフォームを埋め込み。回答データにタグを自動付与し、後工程に連携。</p>
+        </div>
+      </div>
+
+      <div class="partner-row">
+        <div class="partner-box spokes-box">
+          <div class="partner-box-label">SPOKES クライアントが得る</div>
+          <strong>視聴行動の把握</strong>
+          <p>どこで離脱したか、何回再生したか — 動画単体では取れていなかった質的データ。</p>
+        </div>
+        <div class="partner-arrow">
+          <span>＋</span>
+        </div>
+        <div class="partner-box survey-box">
+          <div class="partner-box-label">クライアントが得る</div>
+          <strong>視聴後の意図・意見</strong>
+          <p>「理解できたか」「次のステップは何か」「満足度は」— 視聴直後に取れる定性フィードバック。</p>
+        </div>
+      </div>
+
+      <div class="partner-result">
+        <div class="partner-result-icon">🎯</div>
+        <div class="partner-result-text">
+          <strong>クライアントが最終的に得られる価値</strong>
+          <p>「動画を見た」という事実だけでなく、「見て何を感じ、次に何をしたいか」まで把握できる。営業・研修・CS のあらゆる説明業務に ROI の根拠が生まれる。</p>
+        </div>
+      </div>
+      <div style="margin-top:14px; background:#f8f9fc; border:1px solid #e4e8f0; border-radius:10px; padding:16px 20px; display:flex; align-items:flex-start; gap:14px;">
+        <div style="font-size:20px; flex-shrink:0; margin-top:2px;">🏷️</div>
+        <div>
+          <div style="font-size:12px; font-weight:700; color:#3DBA90; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px;">回答内容によるタグ自動分流</div>
+          <p style="font-size:13px; color:#4a4a6a; line-height:1.7;">SPOKES は共通 URL での視聴が基本のため、視聴者の個人特定はフォーム内の記名欄で対応。SurveyCake の強みは、回答内容に応じたタグの自動付与——「購買意向あり」「要フォローアップ」「理解済み」など、次のアクションに直結するセグメントを自動で振り分けます。個別回答ダッシュボードで一件ずつ確認することも可能です。<br><span style="font-size:11px; color:#aaa;">※ 視聴秒数・クリックチャプター等の視聴データとの紐付けは POC フェーズで技術検証予定</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: USE CASES -->
+  <div class="section">
+    <div class="section-label"><div class="bar"></div><span>活用シーン</span></div>
+    <h2>3 つの主要ユースケース</h2>
+
+    <div class="usecase-grid">
+      <div class="usecase-card type-a">
+        <div class="usecase-emoji">🤝</div>
+        <div class="usecase-tag">サービス説明後</div>
+        <h3>ニーズヒアリング<br>フォーム</h3>
+        <p>サービス説明動画の末尾に、「ご興味のある機能」「ご予算感」「導入時期」などの需要確認フォームを埋め込み。営業が次の商談に入る前に顧客の意図を把握できる。</p>
+        <div class="usecase-feature">
+          <span class="feature-pill">回答事前入力</span>
+          <span class="feature-pill">タグ自動付与</span>
+          <span class="feature-pill">CRM 連携</span>
+        </div>
+      </div>
+
+      <div class="usecase-card type-b">
+        <div class="usecase-emoji">🎓</div>
+        <div class="usecase-tag">教育・研修後</div>
+        <h3>理解度テスト・<br>評価フォーム</h3>
+        <p>研修動画の後に理解度テストを実施。採点機能により合否・スコアを自動判定し、「合格」「要再研修」タグを自動付与。<br><br>
+        <span style="font-size:12px; color:#888;">▸ 匿名受講の場合：スコア統計・全体通過率の把握に活用<br>
+        ▸ 個人管理が必要な場合：フォーム内に社員番号・氏名欄を設置、または SPOKES 側で個別 URL 発行（技術検証予定）</span></p>
+        <div class="usecase-feature">
+          <span class="feature-pill">採点・スコア機能</span>
+          <span class="feature-pill">タグ自動付与</span>
+          <span class="feature-pill">結果通知</span>
+        </div>
+      </div>
+
+      <div class="usecase-card type-c">
+        <div class="usecase-emoji">⭐</div>
+        <div class="usecase-tag">カスタマーサービス後</div>
+        <h3>CS 満足度調査</h3>
+        <p>サポート説明動画・対応後に満足度アンケートを自動送信。低スコア時はリアルタイムアラートでチームに通知し、迅速なフォローアップを実現。</p>
+        <div class="usecase-feature">
+          <span class="feature-pill">低スコアアラート</span>
+          <span class="feature-pill">リアルタイム通知</span>
+          <span class="feature-pill">多拠点対応</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: FEATURES -->
+  <div class="section">
+    <div class="section-label"><div class="bar"></div><span>SurveyCake 機能ハイライト</span></div>
+    <h2>連携で活きる主な機能</h2>
+    <div class="features-row">
+      <div class="feature-card">
+        <div class="icon">🏷️</div>
+        <h4>タグ自動付与</h4>
+        <p>回答内容に基づいてタグを自動設定。セグメント管理・後工程連携がスムーズに。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">✍️</div>
+        <h4>回答事前入力</h4>
+        <p>顧客情報をフォームに自動埋め込み。回答率向上と個人ごとのデータ管理を両立。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🏆</div>
+        <h4>採点・テスト機能</h4>
+        <p>設問に配点を設定し、合否・スコアを自動計算。研修・資格確認に対応。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔔</div>
+        <h4>連動型アラート</h4>
+        <p>低スコア・特定回答でリアルタイム通知。メール・LINE・Slack 等に対応。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔗</div>
+        <h4>外部サービス連携</h4>
+        <p>CRM・CDP・POS との API 連携。回答データを既存システムにシームレスに統合。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: SECURITY -->
+  <div class="section">
+    <div class="section-label"><div class="bar"></div><span>セキュリティ</span></div>
+    <h2>エンタープライズ対応の安心感</h2>
+    <div class="security-bar">
+      <div class="security-icon">🔒</div>
+      <div class="security-text">
+        <h3>金融・医療・公共機関での導入実績</h3>
+        <p>国際セキュリティ基準に準拠。機密性の高いデータを扱うエンタープライズ顧客のニーズに対応。</p>
+      </div>
+      <div class="security-badges">
+        <span class="security-badge">ISO 認証取得</span>
+        <span class="security-badge">API 完全対応</span>
+        <span class="security-badge">独立サーバー対応</span>
+        <span class="security-badge">1,600+ 公共機関導入</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: POC -->
+  <div class="section">
+    <div class="section-label"><div class="bar"></div><span>次のステップ候補</span></div>
+    <h2>POC（概念実証）のご提案</h2>
+    <div class="poc-box">
+      <div class="poc-label">⚠ 検討中・要確認</div>
+      <h3>SPOKES 視聴データ × SurveyCake 回答データの統合 POC</h3>
+      <p>SPOKES 動画の視聴完了時に、視聴データを URL パラメータとして SurveyCake フォームに引き渡すことで、「どこまで見て、何を回答したか」を紐付けて管理できる仕組みの検証を想定しています。</p>
+
+      <div style="margin:16px 0; background:#f8f9fc; border-radius:8px; padding:14px 18px;">
+        <div style="font-size:11px; font-weight:700; color:#3DBA90; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px;">想定する引き渡しデータ（例）</div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <span style="font-size:12px; background:white; border:1px solid #e4e8f0; padding:4px 10px; border-radius:6px; color:#4a4a6a;">✅ 視聴秒数</span>
+          <span style="font-size:12px; background:white; border:1px solid #e4e8f0; padding:4px 10px; border-radius:6px; color:#4a4a6a;">✅ クリックしたチャプター</span>
+          <span style="font-size:12px; background:white; border:1px solid #e4e8f0; padding:4px 10px; border-radius:6px; color:#aaa;">△ 視聴完了率（要確認）</span>
+          <span style="font-size:12px; background:white; border:1px solid #e4e8f0; padding:4px 10px; border-radius:6px; color:#aaa;">△ 個別ユーザー ID（要確認）</span>
+        </div>
+        <div style="font-size:11px; color:#aaa; margin-top:8px;">✅ = SPOKES 側で取得可能と確認済み　△ = POC フェーズで技術確認予定</div>
+      </div>
+
+      <div class="poc-steps">
+        <div class="poc-step">
+          <div class="poc-step-num">1</div>
+          <p>Bloom Act 様よりテストアカウントのご提供をいただく（ご検討をお願いしたい点）</p>
+        </div>
+        <div class="poc-step">
+          <div class="poc-step-num">2</div>
+          <p>SurveyCake 側でサンプルフォームを作成し、SPOKES 動画末尾への埋め込みをテスト。URL パラメータ経由での視聴データ受け渡しを検証。</p>
+        </div>
+        <div class="poc-step">
+          <div class="poc-step-num">3</div>
+          <p>統合データを活用した POC デモを共同作成し、SPOKES クライアントへの提案シナリオを検討。</p>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; border-top:1px dashed #e4e8f0; padding-top:16px;">
+        <div style="font-size:11px; font-weight:700; color:#aaa; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">拡張の方向性（Nice to Have）</div>
+        <p style="font-size:13px; color:#4a4a6a; line-height:1.7;">研修受講管理・資格確認など、個人単位での追跡が必要なユースケースについては、SPOKES 側での個別 URL 発行の可否と合わせて検討できます。必須要件ではありませんが、実現できれば活用の幅が大きく広がります。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: NEXT STEPS -->
+  <div class="section">
+    <div class="section-label"><div class="bar"></div><span>Next Steps</span></div>
+    <h2>今後のアクション</h2>
+    <div class="nextsteps">
+      <div class="nextstep-row">
+        <div class="nextstep-icon">🧪</div>
+        <div class="nextstep-content">
+          <h4>テストアカウントの提供確認（Bloom Act 様へのご依頼）</h4>
+          <p>POC 実施のため、SPOKES テスト環境へのアクセスをご検討いただけますと幸いです。</p>
+        </div>
+      </div>
+      <div class="nextstep-row">
+        <div class="nextstep-icon">📋</div>
+        <div class="nextstep-content">
+          <h4>サンプルフォームの作成（SurveyCake 側）</h4>
+          <p>3 ユースケース（ニーズヒアリング・理解度テスト・CS 満足度）のサンプルを準備します。</p>
+        </div>
+      </div>
+      <div class="nextstep-row">
+        <div class="nextstep-icon">📅</div>
+        <div class="nextstep-content">
+          <h4>技術担当者を交えた第 2 回ミーティング</h4>
+          <p>URL 埋め込み・ログ連携の技術的な実現性を確認するため、双方の技術担当者を交えた場を設けたいと考えています。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">SurveyCake</div>
+  <div class="footer-note">本資料は 2026年7月1日 の打ち合わせを踏まえた初稿です。内容は今後の協議により変更となる場合があります。</div>
+</div>
+
+</body>
+</html>
